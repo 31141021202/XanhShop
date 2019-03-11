@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XanhShop.Model", "XanhShop.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XanhShop.Service", "XanhShop.Service\XanhShop.Service.csproj", "{8984A77E-FF1C-46E0-AC9C-8C039789352D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XanhShop.Web", "XanhShop.Web\XanhShop.Web.csproj", "{BF06DEF5-008A-4D85-B9B6-2AD392C45F7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XanhShop.Web", "XanhShop.Web\XanhShop.Web.csproj", "{6A6B3B92-7C3F-416C-9FBC-299A84C4F36E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{8984A77E-FF1C-46E0-AC9C-8C039789352D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8984A77E-FF1C-46E0-AC9C-8C039789352D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8984A77E-FF1C-46E0-AC9C-8C039789352D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF06DEF5-008A-4D85-B9B6-2AD392C45F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF06DEF5-008A-4D85-B9B6-2AD392C45F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF06DEF5-008A-4D85-B9B6-2AD392C45F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF06DEF5-008A-4D85-B9B6-2AD392C45F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6B3B92-7C3F-416C-9FBC-299A84C4F36E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6B3B92-7C3F-416C-9FBC-299A84C4F36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6B3B92-7C3F-416C-9FBC-299A84C4F36E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6B3B92-7C3F-416C-9FBC-299A84C4F36E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
