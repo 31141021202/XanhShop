@@ -41,7 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerOrderDetailService.cs" />
+    <Compile Include="CustomerOrderService.cs" />
+    <Compile Include="CustomerService.cs" />
+    <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupplierOrderService.cs" />
+    <Compile Include="SupplierService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XanhShop.Data\XanhShop.Data.csproj">
+      <Project>{F1707206-0202-43BC-9F9D-BC8E65197DF2}</Project>
+      <Name>XanhShop.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XanhShop.Model\XanhShop.Model.csproj">
+      <Project>{7D400D4B-B23B-4966-9EF8-A35B00CA2DEC}</Project>
+      <Name>XanhShop.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

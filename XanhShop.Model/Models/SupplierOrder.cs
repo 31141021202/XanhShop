@@ -24,6 +24,6 @@ namespace XanhShop.Model.Models
         [MaxLength]
         public string AdditionalNote { get; set; }
 
-        public virtual IEnumerable<SupplierOrderDetail> GetSupplierOrderDetails { get; set; }
+        public virtual IEnumerable<SupplierOrderDetail> SupplierOrderDetails { get; set; }
     }
 }

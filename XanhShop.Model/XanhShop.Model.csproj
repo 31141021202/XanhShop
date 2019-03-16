@@ -53,6 +53,7 @@
     <Compile Include="Models\CustomerOrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
+    <Compile Include="Models\ProductSupplier.cs" />
     <Compile Include="Models\Shipper.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\SupplierOrder.cs" />
