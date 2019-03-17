@@ -28,12 +28,12 @@ namespace XanhShop.Model.Models
         [MaxLength(50)]
         public string Status { get; set; }
 
-        public int ShipperID { get; set; }
+        public int? ShipperID { get; set; }
 
         [ForeignKey("ShipperID")]
         public virtual Shipper Shipper {get; set; }
 
-        public int CustomerID { get; set; }
+        public int? CustomerID { get; set; }
 
         [ForeignKey("CustomerID")]
         public virtual Customer Customer { get; set; }

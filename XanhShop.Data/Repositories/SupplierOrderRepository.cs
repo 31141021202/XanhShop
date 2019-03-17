@@ -1,4 +1,5 @@
-﻿using XanhShop.Data.Infrastructure;
+﻿using System.Collections.Generic;
+using XanhShop.Data.Infrastructure;
 using XanhShop.Model.Models;
 
 namespace XanhShop.Data.Repositories

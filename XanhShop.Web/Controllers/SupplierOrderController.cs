@@ -35,12 +35,10 @@ namespace XanhShop.Web.Controllers
             return View();
         }
 
-        public ActionResult GenerateSupplierOrders(IEnumerable<CustomerOrder> customerOrders)
+        [HttpGet]
+        public ActionResult GenerateSupplierOrders()
         {
-            var supplierOrders = _supplierOrderService.GenerateSupplierOrders();
-            return new JsonResult();
+            return Json(new { data = _supplierOrderService.GenerateSupplierOrders() });
         }
-
-        
     }
 }

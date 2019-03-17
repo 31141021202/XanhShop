@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using XanhShop.Data;
 using XanhShop.Data.Infrastructure;
 using XanhShop.Data.Repositories;
+using XanhShop.Service;
 
 [assembly: OwinStartupAttribute(typeof(XanhShop.Web.Startup))]
 namespace XanhShop.Web
@@ -37,7 +38,10 @@ namespace XanhShop.Web
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces().InstancePerRequest();
 
-            // TODO: Service
+            // Service
+            builder.RegisterAssemblyTypes(typeof(SupplierOrderService).Assembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces().InstancePerRequest();
 
             IContainer container = builder.Build();
 

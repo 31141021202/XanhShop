@@ -13,11 +13,9 @@ namespace XanhShop.Model.Models
         [Column(Order = 2)]
         public int ProductID { get; set; }
 
-        [Required]
         public double Quantity { get; set; }
 
-        [Required]
-        public double BuyPricePerUnit { get; set; }
+        public double? BuyPricePerUnit { get; set; }
 
         [ForeignKey("SupplierOrderID")]
         public virtual SupplierOrder SupplierOrder { get; set; }

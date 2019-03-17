@@ -16,13 +16,11 @@ namespace XanhShop.Service
     public class SupplierOrderService : ISupplierOrderService
     {
         ISupplierOrderRepository _supplierOrderRepository;
-        ICustomerOrderRepository _customerOrderRepository;
         ICustomerOrderDetailRepository _customerOrderDetailRepository;
         IUnitOfWork _unitOfWork;
-        public SupplierOrderService(ISupplierOrderRepository supplierOrderRepository, ICustomerOrderRepository customerOrderRepository, ICustomerOrderDetailRepository customerOrderDetailRepository, IUnitOfWork unitOfWork)
+        public SupplierOrderService(ISupplierOrderRepository supplierOrderRepository, ICustomerOrderDetailRepository customerOrderDetailRepository, IUnitOfWork unitOfWork)
         {
             _supplierOrderRepository = supplierOrderRepository;
-            _customerOrderRepository = customerOrderRepository;
             _customerOrderDetailRepository = customerOrderDetailRepository;
             _unitOfWork = unitOfWork;
         }
@@ -30,37 +28,27 @@ namespace XanhShop.Service
         public IEnumerable<SupplierOrder> GenerateSupplierOrders()
         {
             List<SupplierOrder> listOrder = new List<SupplierOrder>();
-            // var customerOrders = _customerOrderRepository.GetMulti(x => x.DateOrdered.Value.Date == DateTime.Now.Date, new string[] { "CustomerOrderDetails" });
-            var customerOrderDetails = _customerOrderDetailRepository.GetMulti(x => x.CustomerOrder.DateOrdered.Value.Date == DateTime.Now.Date, new string[] { "Products", "Suppliers" });
-            Dictionary<Product, double> productQuantityDictionary = new Dictionary<Product, double>();
-            foreach (var customerOrderDetail in customerOrderDetails)
-            {
-                if (productQuantityDictionary.ContainsKey(customerOrderDetail.Product))
-                {
-                    productQuantityDictionary[customerOrderDetail.Product] += customerOrderDetail.Quantity;
-                }
-                else
-                {
-                    productQuantityDictionary.Add(customerOrderDetail.Product, customerOrderDetail.Quantity);
-                }
-            }
-            foreach (var productQuantity in productQuantityDictionary)
-            {
-                if (productQuantity.Key.Suppliers.Count() == 1)
-                {
-                    SupplierOrder order = new SupplierOrder();
-                    
-                    listOrder.Add(new SupplierOrder()
-                    {
-                        SupplierID = productQuantity.Key.Suppliers.FirstOrDefault().ID,
-                        SupplierOrderDetails = new List<SupplierOrderDetail>()
-                        {
+            var productQuantityList = _customerOrderDetailRepository.GenerateListOrderDetailGroupedByProduct();
 
-                        }
-                    });
+            foreach (var productQuantity in productQuantityList)
+            {
+                SupplierOrder supplierOrder = new SupplierOrder();
+                var countSuppliers = productQuantity.Product.Suppliers.Count();
+                for (int i = 1; i <= countSuppliers; i++)
+                {
+                    supplierOrder.SupplierID = productQuantity.Product.Suppliers.Skip(i - 1).FirstOrDefault().ID;
+                    supplierOrder.SupplierOrderDetails = new List<SupplierOrderDetail>()
+                        {
+                            new SupplierOrderDetail()
+                            {
+                                ProductID = productQuantity.ProductID,
+                                Quantity = productQuantity.Quantity / countSuppliers
+                            }
+                        };
+                    listOrder.Add(supplierOrder);
                 }
             }
-            return new List<SupplierOrder>();
+            return listOrder;
         }
     }
 }
