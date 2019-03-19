@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201903171740583_NullingSomeFields.Designer.cs">
       <DependentUpon>201903171740583_NullingSomeFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903181518395_AddNNProductSupplierNavigation.cs" />
+    <Compile Include="Migrations\201903181518395_AddNNProductSupplierNavigation.Designer.cs">
+      <DependentUpon>201903181518395_AddNNProductSupplierNavigation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerOrderDetailRepository.cs" />
@@ -102,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903171740583_NullingSomeFields.resx">
       <DependentUpon>201903171740583_NullingSomeFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903181518395_AddNNProductSupplierNavigation.resx">
+      <DependentUpon>201903181518395_AddNNProductSupplierNavigation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

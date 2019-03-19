@@ -11,6 +11,10 @@ namespace XanhShop.Web.Controllers
     public class SupplierOrderController : Controller
     {
         ISupplierOrderService _supplierOrderService;
+        public SupplierOrderController(ISupplierOrderService supplierOrderService)
+        {
+            _supplierOrderService = supplierOrderService;
+        }
         // GET: SupplierOrder
         public ActionResult Index()
         {
@@ -38,7 +42,7 @@ namespace XanhShop.Web.Controllers
         [HttpGet]
         public ActionResult GenerateSupplierOrders()
         {
-            return Json(new { data = _supplierOrderService.GenerateSupplierOrders() });
+            return Json(new { data = _supplierOrderService.GenerateSupplierOrders() }, JsonRequestBehavior.AllowGet);
         }
     }
 }

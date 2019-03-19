@@ -40,6 +40,6 @@ namespace XanhShop.Model.Models
         [ForeignKey("ProductCategoryID")]
         public virtual ProductCategory ProductCategory { get; set; } 
 
-        public virtual IEnumerable<Supplier> Suppliers { get; set; }
+        public virtual IEnumerable<ProductSupplier> ProductSuppliers { get; set; }
     }
 }

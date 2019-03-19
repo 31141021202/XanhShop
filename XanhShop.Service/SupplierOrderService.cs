@@ -17,11 +17,13 @@ namespace XanhShop.Service
     {
         ISupplierOrderRepository _supplierOrderRepository;
         ICustomerOrderDetailRepository _customerOrderDetailRepository;
+        IProductSupplierRepository _productSupplierRepository;
         IUnitOfWork _unitOfWork;
-        public SupplierOrderService(ISupplierOrderRepository supplierOrderRepository, ICustomerOrderDetailRepository customerOrderDetailRepository, IUnitOfWork unitOfWork)
+        public SupplierOrderService(ISupplierOrderRepository supplierOrderRepository, IProductSupplierRepository productSupplierRepository, ICustomerOrderDetailRepository customerOrderDetailRepository, IUnitOfWork unitOfWork)
         {
             _supplierOrderRepository = supplierOrderRepository;
             _customerOrderDetailRepository = customerOrderDetailRepository;
+            _productSupplierRepository = productSupplierRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -33,21 +35,30 @@ namespace XanhShop.Service
             foreach (var productQuantity in productQuantityList)
             {
                 SupplierOrder supplierOrder = new SupplierOrder();
-                var countSuppliers = productQuantity.Product.Suppliers.Count();
-                for (int i = 1; i <= countSuppliers; i++)
+                var productSuppliers = _productSupplierRepository.GetMulti(x => x.ProductId == productQuantity.ProductID, new string[] { "Product", "Supplier" });
+                foreach (var productSupplier in productSuppliers)
                 {
-                    supplierOrder.SupplierID = productQuantity.Product.Suppliers.Skip(i - 1).FirstOrDefault().ID;
+                    supplierOrder.SupplierID = productSupplier.SupplierID;
+                    supplierOrder.Supplier = productSupplier.Supplier;
                     supplierOrder.SupplierOrderDetails = new List<SupplierOrderDetail>()
                         {
                             new SupplierOrderDetail()
                             {
                                 ProductID = productQuantity.ProductID,
-                                Quantity = productQuantity.Quantity / countSuppliers
+                                Product = productSupplier.Product,
+                                Quantity = productQuantity.Quantity / productSuppliers.Count()
                             }
                         };
                     listOrder.Add(supplierOrder);
                 }
             }
+
+            listOrder = listOrder.GroupBy(x => x.SupplierID).Select(x => new SupplierOrder() { 
+                SupplierID = x.Key,
+                SupplierOrderDetails = x.Select(y => y.SupplierOrderDetails).Aggregate((a,b) => a.Concat(b)),
+                Supplier = x.Select(y => y.Supplier).FirstOrDefault(),
+            }).ToList();
+
             return listOrder;
         }
     }

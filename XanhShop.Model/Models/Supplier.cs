@@ -32,7 +32,7 @@ namespace XanhShop.Model.Models
         [MaxLength(256)]
         public string ProductArrivedLocation { get; set; }
 
-        public virtual IEnumerable<Product> Products { get; set; }
+        public virtual IEnumerable<ProductSupplier> ProductSuppliers { get; set; }
 
         public virtual IEnumerable<SupplierOrder> SupplierOrders { get; set; }
 
