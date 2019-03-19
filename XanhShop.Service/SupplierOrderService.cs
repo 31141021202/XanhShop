@@ -46,7 +46,8 @@ namespace XanhShop.Service
                             {
                                 ProductID = productQuantity.ProductID,
                                 Product = productSupplier.Product,
-                                Quantity = productQuantity.Quantity / productSuppliers.Count()
+                                Quantity = productQuantity.Quantity / productSuppliers.Count(),
+                                // BuyPricePerUnit = productSupplier.BuyPricePerUnit
                             }
                         };
                     listOrder.Add(supplierOrder);
