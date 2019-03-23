@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Tổng hợp đơn hàng";
+}
+
+<h2>Tổng hợp đơn đặt hàng - @DateTime.Now.Date</h2>
+<hr />
+
+<table id="supplierOrdersData" class="table"></table>
+<div id="orderDetails">
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <p id="supplierName" class = "control-label col-md-2"></p>
+        </div>
+
+        <table id="productOrderDetails" class="table"></table>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        
+
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>*@
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+            $.ajax({
+                method: "GET",
+                url: "/SupplierOrder/GenerateSupplierOrders/",
+                dataType: "json",
+                async: false,
+            }).done(function (result) {
+                window.localStorage.setItem('ordersResult', JSON.stringify(result.data));
+                initOrder(result.data);
+                initOrderDetails(result.data[0])
+            }).fail(function () {
+                alert("Lỗi đã xảy ra");
+            });
+        }
+
+        function initOrder(data) {
+            var htmlListSupplierOrder = "";
+            for (var i = 0; i < data.length; i++) {
+                htmlListSupplierOrder += '<tr>';
+                htmlListSupplierOrder += '<td id="' + i + '"class="order" onclick="getOrderDetails(' + i + ')">' + data[i].Supplier.Name + '</td>';
+                htmlListSupplierOrder += '</tr>';
+            }
+            $('#supplierOrdersData').html(htmlListSupplierOrder);
+        }
+
+        function initOrderDetails(firstOrder) {
+            var htmlListProductOrderDetails = ""
+            htmlListProductOrderDetails += '<tr>';
+            htmlListProductOrderDetails += '<th>Sản phẩm</th>';
+            htmlListProductOrderDetails += '<th>Số lượng</th>';
+            htmlListProductOrderDetails += '<th>Đơn giá</th>';
+            htmlListProductOrderDetails += '</tr>';
+            var orderDetails = firstOrder.SupplierOrderDetails;
+            for (var i = 0; i < orderDetails.length; i++) {
+                htmlListProductOrderDetails += '<tr>';
+                htmlListProductOrderDetails += '<td>' + orderDetails[i].Product.Name + '</td>';
+                htmlListProductOrderDetails += '<td>' + orderDetails[i].Quantity + '</td>';
+                htmlListProductOrderDetails += '<td>' + orderDetails[i].Quantity + '</td>';
+                htmlListProductOrderDetails += '<tr>';
+            }
+            $('#productOrderDetails').html(htmlListProductOrderDetails);
+        }
+
+        function getOrderDetails(index) {
+            var result = JSON.parse(window.localStorage.getItem('ordersResult'));
+            initOrderDetails(result[index]);
+        }
+    </script> 
+}
+
+

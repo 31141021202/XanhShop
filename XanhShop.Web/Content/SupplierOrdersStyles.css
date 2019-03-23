@@ -1,0 +1,12 @@
+﻿
+#supplierOrdersData {
+    width: 200px;
+    display: inline-table;
+    vertical-align: top;
+}
+
+#orderDetails {
+    width: 800px;
+    display: inline-block;
+    background-color: bisque;
+}

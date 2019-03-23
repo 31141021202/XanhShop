@@ -21,10 +21,10 @@ namespace XanhShop.Web.Models
 
         public string ProductArrivedLocation { get; set; }
 
-        public virtual IEnumerable<ProductSupplier> ProductSuppliers { get; set; }
+        public virtual IEnumerable<ProductSupplierViewModel> ProductSuppliers { get; set; }
 
         public virtual IEnumerable<SupplierOrderViewModel> SupplierOrders { get; set; }
 
-        public virtual IEnumerable<SupplyingCategory> SupplyingCategories { get; set; }
+        //public virtual IEnumerable<SupplyingCategoryViewModel> SupplyingCategories { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace XanhShop.Service
 {
     public interface ISupplierOrderService
     {
+        IEnumerable<SupplierOrder> GetAll();
         IEnumerable<SupplierOrder> GenerateSupplierOrders();
     }
     public class SupplierOrderService : ISupplierOrderService
@@ -34,10 +35,11 @@ namespace XanhShop.Service
 
             foreach (var productQuantity in productQuantityList)
             {
-                SupplierOrder supplierOrder = new SupplierOrder();
+                
                 var productSuppliers = _productSupplierRepository.GetMulti(x => x.ProductId == productQuantity.ProductID, new string[] { "Product", "Supplier" });
                 foreach (var productSupplier in productSuppliers)
                 {
+                    SupplierOrder supplierOrder = new SupplierOrder();
                     supplierOrder.SupplierID = productSupplier.SupplierID;
                     supplierOrder.Supplier = productSupplier.Supplier;
                     supplierOrder.SupplierOrderDetails = new List<SupplierOrderDetail>()
@@ -54,13 +56,18 @@ namespace XanhShop.Service
                 }
             }
 
-            listOrder = listOrder.GroupBy(x => x.SupplierID).Select(x => new SupplierOrder() { 
+            listOrder = listOrder.GroupBy(x => x.SupplierID).Select(x => new SupplierOrder() {
                 SupplierID = x.Key,
                 SupplierOrderDetails = x.Select(y => y.SupplierOrderDetails).Aggregate((a,b) => a.Concat(b)),
                 Supplier = x.Select(y => y.Supplier).FirstOrDefault(),
             }).ToList();
 
             return listOrder;
+        }
+
+        public IEnumerable<SupplierOrder> GetAll()
+        {
+            return _supplierOrderRepository.GetAll(new string[] { "SupplierOrderDetails", "Product" });
         }
     }
 }
