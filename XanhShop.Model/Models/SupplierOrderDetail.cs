@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using XanhShop.Model.Abstract;
 
 namespace XanhShop.Model.Models
 {
-    public class SupplierOrderDetail
+    public class SupplierOrderDetail : Status
     {
         [Key]
         [Column(Order = 1)]

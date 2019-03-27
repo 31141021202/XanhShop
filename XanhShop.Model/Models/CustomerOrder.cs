@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using XanhShop.Model.Abstract;
 
 namespace XanhShop.Model.Models
 {
-    public class CustomerOrder
+    public class CustomerOrder : Status
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -24,9 +25,6 @@ namespace XanhShop.Model.Models
 
         [MaxLength(100)]
         public string PaymentMethod { get; set; }
-        
-        [MaxLength(50)]
-        public string Status { get; set; }
 
         public int? ShipperID { get; set; }
 
@@ -38,6 +36,6 @@ namespace XanhShop.Model.Models
         [ForeignKey("CustomerID")]
         public virtual Customer Customer { get; set; }
 
-        public virtual IEnumerable<CustomerOrderDetail> GetCustomerOrderDetails { get; set; }
+        public virtual IEnumerable<CustomerOrderDetail> CustomerOrderDetails { get; set; }
     }
 }

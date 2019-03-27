@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\Status.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerOrder.cs" />
     <Compile Include="Models\CustomerOrderDetail.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ProductSupplier.cs" />
     <Compile Include="Models\Shipper.cs" />
+    <Compile Include="Models\StatusCodeMap.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\SupplierOrder.cs" />
     <Compile Include="Models\SupplierOrderDetail.cs" />

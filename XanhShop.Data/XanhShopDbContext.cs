@@ -26,6 +26,7 @@ namespace XanhShop.Data
         public DbSet<SupplierOrderDetail> SupplierOrderDetails { get; set; }
         public DbSet<SupplierSupplyingCategory> SupplierSupplyingCategories { get; set; }
         public DbSet<SupplyingCategory> SupplyingCategories { get; set; }
+        public DbSet<StatusCodeMap> StatusCodeMaps { get; set; }
 
         public static XanhShopDbContext Create()
         {

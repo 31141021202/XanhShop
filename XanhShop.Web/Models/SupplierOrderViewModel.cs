@@ -5,6 +5,7 @@ using System.Web;
 
 namespace XanhShop.Web.Models
 {
+    [Serializable]
     public class SupplierOrderViewModel
     {
         public int ID { get; set; }

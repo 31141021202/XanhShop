@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XanhShop.Common;
 using XanhShop.Data.Infrastructure;
 using XanhShop.Data.Repositories;
 using XanhShop.Model.Models;
@@ -13,25 +14,35 @@ namespace XanhShop.Service
     {
         IEnumerable<SupplierOrder> GetAll();
         IEnumerable<SupplierOrder> GenerateSupplierOrders();
+        SupplierOrder Add(SupplierOrder order);
+        void Save();
+
     }
     public class SupplierOrderService : ISupplierOrderService
     {
         ISupplierOrderRepository _supplierOrderRepository;
         ICustomerOrderDetailRepository _customerOrderDetailRepository;
         IProductSupplierRepository _productSupplierRepository;
+        IStatusCodeMapRepository _statusCodeMapRepository;
         IUnitOfWork _unitOfWork;
-        public SupplierOrderService(ISupplierOrderRepository supplierOrderRepository, IProductSupplierRepository productSupplierRepository, ICustomerOrderDetailRepository customerOrderDetailRepository, IUnitOfWork unitOfWork)
+        public SupplierOrderService(ISupplierOrderRepository supplierOrderRepository, IProductSupplierRepository productSupplierRepository, ICustomerOrderDetailRepository customerOrderDetailRepository, IStatusCodeMapRepository statusCodeMapRepository, IUnitOfWork unitOfWork)
         {
             _supplierOrderRepository = supplierOrderRepository;
             _customerOrderDetailRepository = customerOrderDetailRepository;
             _productSupplierRepository = productSupplierRepository;
+            _statusCodeMapRepository = statusCodeMapRepository;
             _unitOfWork = unitOfWork;
+        }
+
+        public SupplierOrder Add(SupplierOrder order)
+        {
+            return _supplierOrderRepository.Add(order);
         }
 
         public IEnumerable<SupplierOrder> GenerateSupplierOrders()
         {
             List<SupplierOrder> listOrder = new List<SupplierOrder>();
-            var productQuantityList = _customerOrderDetailRepository.GenerateListOrderDetailGroupedByProduct();
+            var productQuantityList = _customerOrderDetailRepository.GenerateListProcessingOrderDetailGroupedByProduct();
 
             foreach (var productQuantity in productQuantityList)
             {
@@ -42,6 +53,8 @@ namespace XanhShop.Service
                     SupplierOrder supplierOrder = new SupplierOrder();
                     supplierOrder.SupplierID = productSupplier.SupplierID;
                     supplierOrder.Supplier = productSupplier.Supplier;
+                    supplierOrder.StatusCode = (int)OptionSets.OrderStatusCode.Processing;
+                    supplierOrder.StatusCodeMap = _statusCodeMapRepository.GetStatusLabel((int)OptionSets.OrderStatusCode.Processing);
                     supplierOrder.SupplierOrderDetails = new List<SupplierOrderDetail>()
                         {
                             new SupplierOrderDetail()
@@ -68,6 +81,11 @@ namespace XanhShop.Service
         public IEnumerable<SupplierOrder> GetAll()
         {
             return _supplierOrderRepository.GetAll(new string[] { "SupplierOrderDetails", "Product" });
+        }
+
+        public void Save()
+        {
+            _unitOfWork.Commit();
         }
     }
 }

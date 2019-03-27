@@ -16,6 +16,7 @@
 
         protected override void Seed(XanhShop.Data.XanhShopDbContext context)
         {
+            // CreateStatusCodeMap(context);
             // CreateProductCategorySample(context);
             // CreateProductSample(context);
             // CreateSupplierSample(context);
@@ -125,6 +126,25 @@
                     new CustomerOrderDetail() { CustomerOrderID = 5, ProductID = 9, Quantity = 2 },
                 };
                 context.CustomerOrderDetails.AddRange(listCustomerOrderDetail);
+                context.SaveChanges();
+            }
+        }
+
+        private void CreateStatusCodeMap(XanhShopDbContext context)
+        {
+            if (context.StatusCodeMaps.Count() == 0)
+            {
+                List<StatusCodeMap> listStatusCodeMap = new List<StatusCodeMap>()
+                {
+                    new StatusCodeMap() { ID = 1, Name = "Đang xử lý" },
+                    new StatusCodeMap() { ID = 2, Name = "Đã đặt" }, 
+                    new StatusCodeMap() { ID = 3, Name = "Đang chờ nhận hàng" },
+                    new StatusCodeMap() { ID = 4, Name = "Đang duyệt hàng" },
+                    new StatusCodeMap() { ID = 5, Name = "Hoàn tất" },
+                    new StatusCodeMap() { ID = 9, Name = "Hủy" },
+                    new StatusCodeMap() { ID = 13, Name = "Hàng bị hỏng" }
+                };
+                context.StatusCodeMaps.AddRange(listStatusCodeMap);
                 context.SaveChanges();
             }
         }

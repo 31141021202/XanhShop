@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201903181518395_AddNNProductSupplierNavigation.Designer.cs">
       <DependentUpon>201903181518395_AddNNProductSupplierNavigation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903261730096_AddStatusCodeMap.cs" />
+    <Compile Include="Migrations\201903261730096_AddStatusCodeMap.Designer.cs">
+      <DependentUpon>201903261730096_AddStatusCodeMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerOrderDetailRepository.cs" />
@@ -80,6 +84,7 @@
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSupplierRepository.cs" />
     <Compile Include="Repositories\ShipperRepository.cs" />
+    <Compile Include="Repositories\StatusCodeMapRepository.cs" />
     <Compile Include="Repositories\SupplierOrderDetailRepository.cs" />
     <Compile Include="Repositories\SupplierOrderRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
@@ -92,6 +97,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XanhShop.Common\XanhShop.Common.csproj">
+      <Project>{B8151611-2EA3-40EC-92A2-F751FA68C26D}</Project>
+      <Name>XanhShop.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XanhShop.Model\XanhShop.Model.csproj">
       <Project>{7D400D4B-B23B-4966-9EF8-A35B00CA2DEC}</Project>
       <Name>XanhShop.Model</Name>
@@ -109,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903181518395_AddNNProductSupplierNavigation.resx">
       <DependentUpon>201903181518395_AddNNProductSupplierNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903261730096_AddStatusCodeMap.resx">
+      <DependentUpon>201903261730096_AddStatusCodeMap.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

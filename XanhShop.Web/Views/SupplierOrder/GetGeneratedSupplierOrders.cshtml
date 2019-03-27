@@ -4,14 +4,19 @@
 }
 
 <h2>Tổng hợp đơn đặt hàng - @DateTime.Now.Date</h2>
-<hr />
 
 <table id="supplierOrdersData" class="table"></table>
 <div id="orderDetails">
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
-            <p id="supplierName" class = "control-label col-md-2"></p>
+            <p id="supplierName" class="control-label col-md-4"></p>
+        </div>
+        <div class="form-group">
+            <p id="supplierPhoneNumber" class="control-label col-md-4"></p>
+        </div>
+        <div class="form-group">
+            <p id="supplierEmail" class="control-label col-md-4"></p>
         </div>
 
         <table id="productOrderDetails" class="table"></table>
@@ -24,31 +29,49 @@
             </div>
         </div>
 
-        
 
-        @*<div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+
+        <div class="form-group">
+            <div class="col-md-2">
+                <button id="" class="btn btn-default" onclick="edit()">Sửa</button>
             </div>
-        </div>*@
+            <div class="col-md-2">
+                <button class="btn btn-default btn-save" onclick="save(this.value)">Lưu</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success" onclick="order()" >Đặt</button>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <script>
         window.onload = function () {
-            $.ajax({
-                method: "GET",
-                url: "/SupplierOrder/GenerateSupplierOrders/",
-                dataType: "json",
-                async: false,
-            }).done(function (result) {
-                window.localStorage.setItem('ordersResult', JSON.stringify(result.data));
-                initOrder(result.data);
-                initOrderDetails(result.data[0])
-            }).fail(function () {
-                alert("Lỗi đã xảy ra");
-            });
+            var data = window.localStorage.getItem("ordersResult");
+            if (data != null) {
+                data = JSON.parse(data);
+                initOrder(data);
+                initOrderDetails(data[0]);
+                $('.btn-save').first().attr('value', 0);
+                lockEditQuantity();
+            }
+            else {
+                $.ajax({
+                    method: "GET",
+                    url: "/SupplierOrder/GenerateSupplierOrders/",
+                    dataType: "json",
+                    async: false,
+                }).done(function (result) {
+                    window.localStorage.setItem('ordersResult', JSON.stringify(result.data));
+                    initOrder(result.data);
+                    initOrderDetails(result.data[0]);
+                    $('.btn-save').first().attr('value', 0);
+                    lockEditQuantity();
+                }).fail(function () {
+                    alert("Lỗi đã xảy ra");
+                });
+            }
         }
 
         function initOrder(data) {
@@ -61,27 +84,74 @@
             $('#supplierOrdersData').html(htmlListSupplierOrder);
         }
 
-        function initOrderDetails(firstOrder) {
+        function initOrderDetails(order) {
+            $('#supplierName').text(order.Supplier.Name);
+            $('#supplierPhoneNumber').text(order.Supplier.PhoneNumber);
+            $('#supplierEmail').text(order.Supplier.Email);
+
             var htmlListProductOrderDetails = ""
             htmlListProductOrderDetails += '<tr>';
             htmlListProductOrderDetails += '<th>Sản phẩm</th>';
             htmlListProductOrderDetails += '<th>Số lượng</th>';
             htmlListProductOrderDetails += '<th>Đơn giá</th>';
             htmlListProductOrderDetails += '</tr>';
-            var orderDetails = firstOrder.SupplierOrderDetails;
+            var orderDetails = order.SupplierOrderDetails;
             for (var i = 0; i < orderDetails.length; i++) {
                 htmlListProductOrderDetails += '<tr>';
                 htmlListProductOrderDetails += '<td>' + orderDetails[i].Product.Name + '</td>';
+                htmlListProductOrderDetails += '<td><input class="product-quantity" value="' + orderDetails[i].Quantity + '" /></td>';
                 htmlListProductOrderDetails += '<td>' + orderDetails[i].Quantity + '</td>';
-                htmlListProductOrderDetails += '<td>' + orderDetails[i].Quantity + '</td>';
-                htmlListProductOrderDetails += '<tr>';
+                htmlListProductOrderDetails += '<tr>'; 
             }
+            
             $('#productOrderDetails').html(htmlListProductOrderDetails);
+            
+            lockEditQuantity();
         }
 
         function getOrderDetails(index) {
             var result = JSON.parse(window.localStorage.getItem('ordersResult'));
+            $('.btn-save').first().attr('value', index);
             initOrderDetails(result[index]);
+        }
+
+        function lockEditQuantity() {
+            $('.product-quantity').attr("disabled", "disabled");
+        }
+
+        function edit() {
+            $('.product-quantity').removeAttr("disabled");
+        }
+
+        function save(index) {
+            var data = window.localStorage.getItem("ordersResult");
+            if (data != null) {
+                data = JSON.parse(data);
+                $('.product-quantity').each(function (i) {
+                    data[index].SupplierOrderDetails[i].Quantity = $(this)[0].value;
+                })
+            }
+            window.localStorage.setItem('ordersResult', JSON.stringify(data));
+            $('.product-quantity').attr("disabled", "disabled");
+        }
+
+        function order() {
+            var data = window.localStorage.getItem("ordersResult");
+            if (data != null) {
+                $.ajax({
+                    method: "POST",
+                    url: "/SupplierOrder/CreateSupplierOrders/",
+                    data: {
+                        orders: data
+                    },
+                    async: false
+                }).done(function () {
+                    alert("Dat thanh cong");
+                    window.localStorage.removeItem("ordersResult");
+                }).fail(function () {
+                    alert("Da co loi xay ra");
+                });
+            }            
         }
     </script> 
 }

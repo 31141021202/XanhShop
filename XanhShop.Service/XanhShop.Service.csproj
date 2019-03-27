@@ -46,10 +46,15 @@
     <Compile Include="CustomerService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupplierOrderDetailService.cs" />
     <Compile Include="SupplierOrderService.cs" />
     <Compile Include="SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XanhShop.Common\XanhShop.Common.csproj">
+      <Project>{B8151611-2EA3-40EC-92A2-F751FA68C26D}</Project>
+      <Name>XanhShop.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XanhShop.Data\XanhShop.Data.csproj">
       <Project>{F1707206-0202-43BC-9F9D-BC8E65197DF2}</Project>
       <Name>XanhShop.Data</Name>

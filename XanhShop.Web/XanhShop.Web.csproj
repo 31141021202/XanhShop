@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -233,8 +235,143 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\.gitignore" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\dist\loadingoverlay.js" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\dist\loadingoverlay.min.js" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\src\loadingoverlay.js" />
+    <Content Include="Libs\jquery\AUTHORS.txt" />
+    <Content Include="Libs\jquery\dist\core.js" />
+    <Content Include="Libs\jquery\dist\jquery.js" />
+    <Content Include="Libs\jquery\dist\jquery.min.js" />
+    <Content Include="Libs\jquery\dist\jquery.slim.js" />
+    <Content Include="Libs\jquery\dist\jquery.slim.min.js" />
+    <Content Include="Libs\jquery\external\sizzle\dist\sizzle.js" />
+    <Content Include="Libs\jquery\external\sizzle\dist\sizzle.min.js" />
+    <Content Include="Libs\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="Libs\jquery\LICENSE.txt" />
+    <Content Include="Libs\jquery\src\ajax.js" />
+    <Content Include="Libs\jquery\src\ajax\jsonp.js" />
+    <Content Include="Libs\jquery\src\ajax\load.js" />
+    <Content Include="Libs\jquery\src\ajax\parseXML.js" />
+    <Content Include="Libs\jquery\src\ajax\script.js" />
+    <Content Include="Libs\jquery\src\ajax\var\location.js" />
+    <Content Include="Libs\jquery\src\ajax\var\nonce.js" />
+    <Content Include="Libs\jquery\src\ajax\var\rquery.js" />
+    <Content Include="Libs\jquery\src\ajax\xhr.js" />
+    <Content Include="Libs\jquery\src\attributes.js" />
+    <Content Include="Libs\jquery\src\attributes\attr.js" />
+    <Content Include="Libs\jquery\src\attributes\classes.js" />
+    <Content Include="Libs\jquery\src\attributes\prop.js" />
+    <Content Include="Libs\jquery\src\attributes\support.js" />
+    <Content Include="Libs\jquery\src\attributes\val.js" />
+    <Content Include="Libs\jquery\src\callbacks.js" />
+    <Content Include="Libs\jquery\src\core.js" />
+    <Content Include="Libs\jquery\src\core\access.js" />
+    <Content Include="Libs\jquery\src\core\camelCase.js" />
+    <Content Include="Libs\jquery\src\core\DOMEval.js" />
+    <Content Include="Libs\jquery\src\core\init.js" />
+    <Content Include="Libs\jquery\src\core\nodeName.js" />
+    <Content Include="Libs\jquery\src\core\parseHTML.js" />
+    <Content Include="Libs\jquery\src\core\ready-no-deferred.js" />
+    <Content Include="Libs\jquery\src\core\ready.js" />
+    <Content Include="Libs\jquery\src\core\readyException.js" />
+    <Content Include="Libs\jquery\src\core\stripAndCollapse.js" />
+    <Content Include="Libs\jquery\src\core\support.js" />
+    <Content Include="Libs\jquery\src\core\toType.js" />
+    <Content Include="Libs\jquery\src\core\var\rsingleTag.js" />
+    <Content Include="Libs\jquery\src\css.js" />
+    <Content Include="Libs\jquery\src\css\addGetHookIf.js" />
+    <Content Include="Libs\jquery\src\css\adjustCSS.js" />
+    <Content Include="Libs\jquery\src\css\curCSS.js" />
+    <Content Include="Libs\jquery\src\css\hiddenVisibleSelectors.js" />
+    <Content Include="Libs\jquery\src\css\showHide.js" />
+    <Content Include="Libs\jquery\src\css\support.js" />
+    <Content Include="Libs\jquery\src\css\var\cssExpand.js" />
+    <Content Include="Libs\jquery\src\css\var\getStyles.js" />
+    <Content Include="Libs\jquery\src\css\var\isHiddenWithinTree.js" />
+    <Content Include="Libs\jquery\src\css\var\rboxStyle.js" />
+    <Content Include="Libs\jquery\src\css\var\rnumnonpx.js" />
+    <Content Include="Libs\jquery\src\css\var\swap.js" />
+    <Content Include="Libs\jquery\src\data.js" />
+    <Content Include="Libs\jquery\src\data\Data.js" />
+    <Content Include="Libs\jquery\src\data\var\acceptData.js" />
+    <Content Include="Libs\jquery\src\data\var\dataPriv.js" />
+    <Content Include="Libs\jquery\src\data\var\dataUser.js" />
+    <Content Include="Libs\jquery\src\deferred.js" />
+    <Content Include="Libs\jquery\src\deferred\exceptionHook.js" />
+    <Content Include="Libs\jquery\src\deprecated.js" />
+    <Content Include="Libs\jquery\src\dimensions.js" />
+    <Content Include="Libs\jquery\src\effects.js" />
+    <Content Include="Libs\jquery\src\effects\animatedSelector.js" />
+    <Content Include="Libs\jquery\src\effects\Tween.js" />
+    <Content Include="Libs\jquery\src\event.js" />
+    <Content Include="Libs\jquery\src\event\ajax.js" />
+    <Content Include="Libs\jquery\src\event\alias.js" />
+    <Content Include="Libs\jquery\src\event\focusin.js" />
+    <Content Include="Libs\jquery\src\event\support.js" />
+    <Content Include="Libs\jquery\src\event\trigger.js" />
+    <Content Include="Libs\jquery\src\exports\amd.js" />
+    <Content Include="Libs\jquery\src\exports\global.js" />
+    <Content Include="Libs\jquery\src\jquery.js" />
+    <Content Include="Libs\jquery\src\manipulation.js" />
+    <Content Include="Libs\jquery\src\manipulation\buildFragment.js" />
+    <Content Include="Libs\jquery\src\manipulation\getAll.js" />
+    <Content Include="Libs\jquery\src\manipulation\setGlobalEval.js" />
+    <Content Include="Libs\jquery\src\manipulation\support.js" />
+    <Content Include="Libs\jquery\src\manipulation\var\rcheckableType.js" />
+    <Content Include="Libs\jquery\src\manipulation\var\rscriptType.js" />
+    <Content Include="Libs\jquery\src\manipulation\var\rtagName.js" />
+    <Content Include="Libs\jquery\src\manipulation\wrapMap.js" />
+    <Content Include="Libs\jquery\src\manipulation\_evalUrl.js" />
+    <Content Include="Libs\jquery\src\offset.js" />
+    <Content Include="Libs\jquery\src\queue.js" />
+    <Content Include="Libs\jquery\src\queue\delay.js" />
+    <Content Include="Libs\jquery\src\selector-native.js" />
+    <Content Include="Libs\jquery\src\selector-sizzle.js" />
+    <Content Include="Libs\jquery\src\selector.js" />
+    <Content Include="Libs\jquery\src\serialize.js" />
+    <Content Include="Libs\jquery\src\traversing.js" />
+    <Content Include="Libs\jquery\src\traversing\findFilter.js" />
+    <Content Include="Libs\jquery\src\traversing\var\dir.js" />
+    <Content Include="Libs\jquery\src\traversing\var\rneedsContext.js" />
+    <Content Include="Libs\jquery\src\traversing\var\siblings.js" />
+    <Content Include="Libs\jquery\src\var\arr.js" />
+    <Content Include="Libs\jquery\src\var\class2type.js" />
+    <Content Include="Libs\jquery\src\var\concat.js" />
+    <Content Include="Libs\jquery\src\var\document.js" />
+    <Content Include="Libs\jquery\src\var\documentElement.js" />
+    <Content Include="Libs\jquery\src\var\fnToString.js" />
+    <Content Include="Libs\jquery\src\var\getProto.js" />
+    <Content Include="Libs\jquery\src\var\hasOwn.js" />
+    <Content Include="Libs\jquery\src\var\indexOf.js" />
+    <Content Include="Libs\jquery\src\var\isFunction.js" />
+    <Content Include="Libs\jquery\src\var\isWindow.js" />
+    <Content Include="Libs\jquery\src\var\ObjectFunctionString.js" />
+    <Content Include="Libs\jquery\src\var\pnum.js" />
+    <Content Include="Libs\jquery\src\var\push.js" />
+    <Content Include="Libs\jquery\src\var\rcssNum.js" />
+    <Content Include="Libs\jquery\src\var\rnothtmlwhite.js" />
+    <Content Include="Libs\jquery\src\var\slice.js" />
+    <Content Include="Libs\jquery\src\var\support.js" />
+    <Content Include="Libs\jquery\src\var\toString.js" />
+    <Content Include="Libs\jquery\src\wrap.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="bower.json" />
+    <Content Include=".bowerrc" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\.bower.json" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\bower.json" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\CHANGELOG.md" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\dist\loadingoverlay.min.js.map" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\LICENSE" />
+    <Content Include="Libs\gasparesganga-jquery-loading-overlay\README.md" />
+    <Content Include="Libs\jquery\.bower.json" />
+    <Content Include="Libs\jquery\bower.json" />
+    <Content Include="Libs\jquery\dist\jquery.min.map" />
+    <Content Include="Libs\jquery\dist\jquery.slim.min.map" />
+    <Content Include="Libs\jquery\external\sizzle\dist\sizzle.min.map" />
+    <Content Include="Libs\jquery\README.md" />
+    <Content Include="Libs\jquery\src\.eslintrc.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -302,6 +439,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XanhShop.Common\XanhShop.Common.csproj">
+      <Project>{B8151611-2EA3-40EC-92A2-F751FA68C26D}</Project>
+      <Name>XanhShop.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XanhShop.Data\XanhShop.Data.csproj">
       <Project>{F1707206-0202-43BC-9F9D-BC8E65197DF2}</Project>
       <Name>XanhShop.Data</Name>
@@ -315,11 +456,18 @@
       <Name>XanhShop.Service</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Libs\gasparesganga-jquery-loading-overlay\typings\loadingoverlay.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

@@ -1,0 +1,7 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "gasparesganga-jquery-loading-overlay": "2.1.6"
+  }
+}

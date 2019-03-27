@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using XanhShop.Common;
 using XanhShop.Model.Models;
 using XanhShop.Service;
+using XanhShop.Web.Extensions;
 using XanhShop.Web.Models;
 
 namespace XanhShop.Web.Controllers
@@ -13,9 +17,11 @@ namespace XanhShop.Web.Controllers
     public class SupplierOrderController : Controller
     {
         ISupplierOrderService _supplierOrderService;
-        public SupplierOrderController(ISupplierOrderService supplierOrderService)
+        ISupplierOrderDetailService _supplierOrderDetailService;
+        public SupplierOrderController(ISupplierOrderService supplierOrderService, ISupplierOrderDetailService supplierOrderDetailService)
         {
             _supplierOrderService = supplierOrderService;
+            _supplierOrderDetailService = supplierOrderDetailService;
         }
         // GET: SupplierOrder
         public ActionResult Index()
@@ -52,6 +58,31 @@ namespace XanhShop.Web.Controllers
         public ActionResult GetGeneratedSupplierOrders()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateSupplierOrders(string orders)
+        {
+            var listOrder = JsonConvert.DeserializeObject<List<SupplierOrderViewModel>>(orders);
+            foreach (var order in listOrder)
+            {
+                SupplierOrder dbOrder = new SupplierOrder();
+                dbOrder.SupplierID = order.SupplierID;
+                dbOrder.DateCreated = DateTime.Now;
+                dbOrder.StatusCode = (int)OptionSets.OrderStatusCode.AwaitingReceive;
+                _supplierOrderService.Add(dbOrder);
+                _supplierOrderService.Save();
+
+                foreach (var orderDetails in order.SupplierOrderDetails)
+                {
+                    SupplierOrderDetail supplierOrderDetail = new SupplierOrderDetail();
+                    orderDetails.SupplierOrderID = dbOrder.ID;
+                    supplierOrderDetail.UpdateSupplierOrderDetail(orderDetails);
+                    _supplierOrderDetailService.Add(supplierOrderDetail);
+                    _supplierOrderDetailService.Save();
+                }
+            }
+            return RedirectToAction("GetGeneratedSupplierOrders");
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using XanhShop.Model.Abstract;
 
 namespace XanhShop.Model.Models
 {
-    public class Product
+    public class Product : Status
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
