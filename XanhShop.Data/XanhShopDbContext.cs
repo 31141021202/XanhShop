@@ -12,7 +12,7 @@ namespace XanhShop.Data
     {
         public XanhShopDbContext() : base("XanhShopConnection")
         {
-            Configuration.LazyLoadingEnabled = false;
+            Configuration.LazyLoadingEnabled = true;
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerOrder> CustomerOrders { get; set; }

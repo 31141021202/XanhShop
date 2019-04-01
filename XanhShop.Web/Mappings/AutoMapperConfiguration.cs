@@ -20,6 +20,10 @@ namespace XanhShop.Web.Mappings
                 cfg.CreateMap<SupplierOrderDetail, SupplierOrderDetailViewModel>();
                 cfg.CreateMap<SupplierOrder, SupplierOrderViewModel>();
                 cfg.CreateMap<Supplier, SupplierViewModel>();
+                cfg.CreateMap<CustomerOrderDetail, CustomerOrderDetailViewModel>();
+                cfg.CreateMap<CustomerOrder, CustomerOrderViewModel>();
+                cfg.CreateMap<Customer, CustomerViewModel>();
+                cfg.CreateMap<Shipper, ShipperViewModel>();
             });
         }
     }

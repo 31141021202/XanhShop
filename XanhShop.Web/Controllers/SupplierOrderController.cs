@@ -18,16 +18,31 @@ namespace XanhShop.Web.Controllers
     {
         ISupplierOrderService _supplierOrderService;
         ISupplierOrderDetailService _supplierOrderDetailService;
-        public SupplierOrderController(ISupplierOrderService supplierOrderService, ISupplierOrderDetailService supplierOrderDetailService)
+        ICustomerOrderService _customerOrderService;
+        ICustomerOrderDetailService _customerOrderDetailService;
+        IProductService _productService;
+        public SupplierOrderController(ISupplierOrderService supplierOrderService,
+            ISupplierOrderDetailService supplierOrderDetailService,
+            ICustomerOrderService customerOrderService,
+            ICustomerOrderDetailService customerOrderDetailService,
+            IProductService productService)
         {
             _supplierOrderService = supplierOrderService;
             _supplierOrderDetailService = supplierOrderDetailService;
+            _customerOrderService = customerOrderService;
+            _customerOrderDetailService = customerOrderDetailService;
+            _productService = productService;
         }
         // GET: SupplierOrder
         public ActionResult Index()
         {
             var dbSupplierOrder = _supplierOrderService.GetAll();
-            var supplierOrders = Mapper.Map<List<SupplierOrderViewModel>>(dbSupplierOrder);
+            List<SupplierOrderViewModel> supplierOrders = new List<SupplierOrderViewModel>();
+            foreach (var dbOrder in dbSupplierOrder)
+            {
+                var supplierOrderVm = Mapper.Map<SupplierOrderViewModel>(dbOrder);
+                supplierOrders.Add(supplierOrderVm);
+            }
             return View(supplierOrders);
         }
 
@@ -35,18 +50,6 @@ namespace XanhShop.Web.Controllers
         public ActionResult Create(SupplierOrder supplierOrder)
         {
             return Json(new { result = "success", data = supplierOrder });
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Update(SupplierOrder supplierOrder)
-        {
-            return View();
         }
 
         [HttpGet]
@@ -64,6 +67,7 @@ namespace XanhShop.Web.Controllers
         public ActionResult CreateSupplierOrders(string orders)
         {
             var listOrder = JsonConvert.DeserializeObject<List<SupplierOrderViewModel>>(orders);
+
             foreach (var order in listOrder)
             {
                 SupplierOrder dbOrder = new SupplierOrder();
@@ -82,6 +86,7 @@ namespace XanhShop.Web.Controllers
                     _supplierOrderDetailService.Save();
                 }
             }
+
             return RedirectToAction("GetGeneratedSupplierOrders");
         }
     }

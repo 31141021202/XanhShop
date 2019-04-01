@@ -75,6 +75,14 @@
     <Compile Include="Migrations\201903261730096_AddStatusCodeMap.Designer.cs">
       <DependentUpon>201903261730096_AddStatusCodeMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903291623214_AddFieldIsModified.cs" />
+    <Compile Include="Migrations\201903291623214_AddFieldIsModified.Designer.cs">
+      <DependentUpon>201903291623214_AddFieldIsModified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903291732504_AddDefaultValueIsModified.cs" />
+    <Compile Include="Migrations\201903291732504_AddDefaultValueIsModified.Designer.cs">
+      <DependentUpon>201903291732504_AddDefaultValueIsModified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerOrderDetailRepository.cs" />
@@ -121,6 +129,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903261730096_AddStatusCodeMap.resx">
       <DependentUpon>201903261730096_AddStatusCodeMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903291623214_AddFieldIsModified.resx">
+      <DependentUpon>201903291623214_AddFieldIsModified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903291732504_AddDefaultValueIsModified.resx">
+      <DependentUpon>201903291732504_AddDefaultValueIsModified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

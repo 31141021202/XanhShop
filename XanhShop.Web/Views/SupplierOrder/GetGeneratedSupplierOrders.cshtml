@@ -1,62 +1,66 @@
 ﻿
 @{
     ViewBag.Title = "Tổng hợp đơn hàng";
+    const int SUPPLYING_CATEGORY_DIVERSE = 1;
 }
 
-<h2>Tổng hợp đơn đặt hàng - @DateTime.Now.Date</h2>
+<h2>Tổng hợp đơn đặt hàng - @DateTime.Now</h2>
+<hr />
+<div>
+    <h2>Tổng hợp sản phẩm giỏ rau: <span id="totalVegsBags"></span></h2>
+    <p>Số lượng đặt trung bình cho ngày hôm nay: <b>100kg</b></p>
+    @Html.Action("GetSuppliersByCategory", "Supplier", new { id = SUPPLYING_CATEGORY_DIVERSE });
+</div>
+<hr />
+<div>
+    <div>
+        <button class="btn btn-success" onclick="order()">Tạo tất cả đặt hàng</button>
+    </div>
 
-<table id="supplierOrdersData" class="table"></table>
-<div id="orderDetails">
-    <div class="form-horizontal">
-        <hr />
-        <div class="form-group">
-            <p id="supplierName" class="control-label col-md-4"></p>
-        </div>
-        <div class="form-group">
-            <p id="supplierPhoneNumber" class="control-label col-md-4"></p>
-        </div>
-        <div class="form-group">
-            <p id="supplierEmail" class="control-label col-md-4"></p>
-        </div>
-
-        <table id="productOrderDetails" class="table"></table>
-
-        <div class="form-group">
-            @*@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })*@
+    <table id="supplierOrdersData" class="table"></table>
+    <div id="orderDetails">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <p id="supplierName" class="control-label col-md-4"></p>
             </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-2">
-                <button id="" class="btn btn-default" onclick="edit()">Sửa</button>
+            <div class="form-group">
+                <p id="supplierPhoneNumber" class="control-label col-md-4"></p>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-default btn-save" onclick="save(this.value)">Lưu</button>
+            <div class="form-group">
+                <p id="supplierEmail" class="control-label col-md-4"></p>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-success" onclick="order()" >Đặt</button>
+
+            <table id="productOrderDetails" class="table"></table>
+
+            <div class="form-group">
+                <div class="col-md-2">
+                    <button id="" class="btn btn-default" onclick="edit()">Sửa</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default btn-save" onclick="save(this.value)">Lưu</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-success" onclick="orderSingle()">Tạo đặt hàng</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+
 @section Scripts {
     <script>
+        var SUPPLYING_CATEGORY_DIVERSE = 3;
         window.onload = function () {
-            var data = window.localStorage.getItem("ordersResult");
-            if (data != null) {
-                data = JSON.parse(data);
-                initOrder(data);
-                initOrderDetails(data[0]);
-                $('.btn-save').first().attr('value', 0);
-                lockEditQuantity();
-            }
-            else {
+            //var data = window.localStorage.getItem("ordersResult");
+            //if (data != null) {
+            //    data = JSON.parse(data);
+            //    initOrder(data);
+            //    initOrderDetails(data[0]);
+            //    $('.btn-save').first().attr('value', 0);
+            //    lockEditQuantity();
+            //}
+            //else {
                 $.ajax({
                     method: "GET",
                     url: "/SupplierOrder/GenerateSupplierOrders/",
@@ -71,7 +75,19 @@
                 }).fail(function () {
                     alert("Lỗi đã xảy ra");
                 });
-            }
+            //}
+            $.ajax({
+                method: "GET",
+                url: "/CustomerOrder/SummarizeBagsOfVeg/",
+                dataType: "json",
+                async: false,
+            }).done(function (result) {
+                $('#totalVegsBags').text(result.total)
+            })
+        }
+
+        function initSuppliers(data) {
+
         }
 
         function initOrder(data) {
@@ -90,20 +106,23 @@
             $('#supplierEmail').text(order.Supplier.Email);
 
             var htmlListProductOrderDetails = ""
-            htmlListProductOrderDetails += '<tr>';
+            htmlListProductOrderDetails += '<tr><tbody>';
             htmlListProductOrderDetails += '<th>Sản phẩm</th>';
             htmlListProductOrderDetails += '<th>Số lượng</th>';
             htmlListProductOrderDetails += '<th>Đơn giá</th>';
+            htmlListProductOrderDetails += '<th></th>';
             htmlListProductOrderDetails += '</tr>';
             var orderDetails = order.SupplierOrderDetails;
             for (var i = 0; i < orderDetails.length; i++) {
                 htmlListProductOrderDetails += '<tr>';
                 htmlListProductOrderDetails += '<td>' + orderDetails[i].Product.Name + '</td>';
                 htmlListProductOrderDetails += '<td><input class="product-quantity" value="' + orderDetails[i].Quantity + '" /></td>';
-                htmlListProductOrderDetails += '<td>' + orderDetails[i].Quantity + '</td>';
-                htmlListProductOrderDetails += '<tr>'; 
+                htmlListProductOrderDetails += '<td>' + orderDetails[i].BuyPricePerUnit + '</td>';
+                htmlListProductOrderDetails += '<td><button class="btn btn-default" onclick="viewCustomerOrder(' + orderDetails[i].ProductID + ')">Xem đặt hàng liên quan</button></td>';
+                htmlListProductOrderDetails += '</tr>'; 
             }
-            
+            htmlListProductOrderDetails += '</tbody>';
+
             $('#productOrderDetails').html(htmlListProductOrderDetails);
             
             lockEditQuantity();
@@ -135,23 +154,30 @@
             $('.product-quantity').attr("disabled", "disabled");
         }
 
+        function viewCustomerOrder(id) {
+            window.open('/CustomerOrder/GetRelatedCustomerOrderDetailByProduct/' + id, '_blank', 'left=100,top=100,width=1000,height=400,toolbar=1,resizable=0');
+        }
+
         function order() {
-            var data = window.localStorage.getItem("ordersResult");
-            if (data != null) {
-                $.ajax({
-                    method: "POST",
-                    url: "/SupplierOrder/CreateSupplierOrders/",
-                    data: {
-                        orders: data
-                    },
-                    async: false
-                }).done(function () {
-                    alert("Dat thanh cong");
-                    window.localStorage.removeItem("ordersResult");
-                }).fail(function () {
-                    alert("Da co loi xay ra");
-                });
-            }            
+            var r = confirm("Đặt tất cả các đơn hàng?");
+            if (r == true) {
+                var data = window.localStorage.getItem("ordersResult");
+                if (data != null) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/SupplierOrder/CreateSupplierOrders/",
+                        data: {
+                            orders: data
+                        },
+                        async: false
+                    }).done(function () {
+                        alert("Dat thanh cong");
+                        window.localStorage.removeItem("ordersResult");
+                    }).fail(function () {
+                        alert("Đã có lỗi xảy ra");
+                    });
+                }     
+            }      
         }
     </script> 
 }

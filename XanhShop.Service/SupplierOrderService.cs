@@ -62,7 +62,7 @@ namespace XanhShop.Service
                                 ProductID = productQuantity.ProductID,
                                 Product = productSupplier.Product,
                                 Quantity = productQuantity.Quantity / productSuppliers.Count(),
-                                // BuyPricePerUnit = productSupplier.BuyPricePerUnit
+                                BuyPricePerUnit = productSupplier.BuyPricePerUnit
                             }
                         };
                     listOrder.Add(supplierOrder);
@@ -80,7 +80,7 @@ namespace XanhShop.Service
 
         public IEnumerable<SupplierOrder> GetAll()
         {
-            return _supplierOrderRepository.GetAll(new string[] { "SupplierOrderDetails", "Product" });
+            return _supplierOrderRepository.GetAll();
         }
 
         public void Save()

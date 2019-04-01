@@ -25,6 +25,15 @@ namespace XanhShop.Web.Models
 
         public virtual IEnumerable<SupplierOrderViewModel> SupplierOrders { get; set; }
 
-        //public virtual IEnumerable<SupplyingCategoryViewModel> SupplyingCategories { get; set; }
+        public int StatusCode { get; set; }
+
+        public StatusCodeMapViewModel StatusCodeMap { get; set; }
+
+        public double? MaximumQuantity { get; set; }
+
+        public double? MinimumQuantity { get; set; }
+
+        public string Scale { get; set; }
+
     }
 }

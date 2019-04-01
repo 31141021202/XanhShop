@@ -26,6 +26,6 @@ namespace XanhShop.Model.Models
         [MaxLength(100)]
         public string Address { get; set; }
 
-        public virtual IEnumerable<CustomerOrder> GetCustomerOrders { get; set; }
+        public virtual IEnumerable<CustomerOrder> CustomerOrders { get; set; }
     }
 }

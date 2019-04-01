@@ -26,8 +26,9 @@ namespace XanhShop.Data.Repositories
              var listGroupedCustomerOrderDetails = GetMulti(x => x.CustomerOrder.DateOrdered.Value.Day == DateTime.Today.Day
                 && x.CustomerOrder.DateOrdered.Value.Month == DateTime.Today.Month
                 && x.CustomerOrder.DateOrdered.Value.Year == DateTime.Today.Year
-                && x.StatusCode == (int)OptionSets.OrderStatusCode.Processing,
-                new string[] { "CustomerOrder" })
+                && x.CustomerOrder.StatusCode == (int)OptionSets.OrderStatusCode.Processing
+                && x.Product.ProductCategoryID != (int)OptionSets.ProductCategoryCode.DiverseVegs,
+                new string[] { "CustomerOrder", "Product" })
                 .GroupBy(x => x.ProductID)
                 .Select(x => new CustomerOrderDetail() {
                     ProductID = x.Key,

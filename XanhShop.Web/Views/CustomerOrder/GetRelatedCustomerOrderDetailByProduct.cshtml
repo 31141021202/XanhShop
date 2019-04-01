@@ -1,0 +1,98 @@
+﻿@model IEnumerable<XanhShop.Model.Models.CustomerOrderDetail>
+
+<h1>@Model.FirstOrDefault().Product.Name</h1>
+<p>
+    Các đặt hàng của khách hàng có sản phẩm @Model.FirstOrDefault().Product.Name
+</p>
+<p>Tổng cộng: @Model.Sum(x => x.Quantity);</p>
+<table class="table">
+    <tr>
+        <th>
+            Khách hàng
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Ngày đặt
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Đã chỉnh sửa
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerOrder.Customer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerOrder.Customer.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerOrder.DateOrdered)
+            </td>
+            <td>
+                <input id="@item.CustomerOrderID" type="text" value="@item.Quantity" class="form-control product-quantity" disabled />
+                <input type="hidden" value="@item.Quantity" class="orignal-quantity-@item.CustomerOrderID"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusCodeMap.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsModifiedByAdmin)
+            </td>
+            <td>
+                <button class="btn btn-default" onclick="edit(@item.CustomerOrderID)">Sửa</button>
+                <button class="btn btn-default" onclick="save(@item.CustomerOrderID)">Lưu</button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts {
+    <script>
+        var data;
+        window.onload = function () {
+            data = @Html.Raw(Json.Encode(Model));
+        }
+
+        function edit(id) {
+            $('#' + id + '.product-quantity').removeAttr('disabled');
+        }
+
+        function save(id) {
+            var updatedQuantity = $('#' + id + '.product-quantity').val();
+            if (updatedQuantity != $('.orignal-quantity-' + id)[0].value) {
+                var updatedOrderDetail = JSON.stringify({
+                    CustomerOrderID: id,
+                    ProductID: @Model.FirstOrDefault().ProductID,
+                    Quantity: updatedQuantity
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "/CustomerOrder/UpdateQuantity/",
+                    data: {
+                        data: updatedOrderDetail
+                    },
+                    async: false
+                }).done(function (data) {
+                    alert(data.result);
+                    location.reload();
+                }).fail(function () {
+                    alert("Đã có lỗi xảy ra");
+                });
+            }
+        }
+    </script>    
+}
+

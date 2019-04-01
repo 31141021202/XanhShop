@@ -33,5 +33,9 @@ namespace XanhShop.Web.Models
         public virtual ProductCategoryViewModel ProductCategory { get; set; }
 
         public virtual IEnumerable<ProductSupplierViewModel> ProductSuppliers { get; set; }
+
+        public int StatusCode { get; set; }
+
+        public StatusCodeMapViewModel StatusCodeMap { get; set; }
     }
 }

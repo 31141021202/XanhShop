@@ -28,5 +28,9 @@ namespace XanhShop.Web.Models
         public string BuyUnit { get; set; }
 
         public string Scale { get; set; }
+
+        public int StatusCode { get; set; }
+
+        public StatusCodeMapViewModel StatusCodeMap { get; set; }
     }
 }

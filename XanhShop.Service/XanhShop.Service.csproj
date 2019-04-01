@@ -45,10 +45,12 @@
     <Compile Include="CustomerOrderService.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="ProductService.cs" />
+    <Compile Include="ProductSupplierService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupplierOrderDetailService.cs" />
     <Compile Include="SupplierOrderService.cs" />
     <Compile Include="SupplierService.cs" />
+    <Compile Include="SupplierSupplyingCategoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XanhShop.Common\XanhShop.Common.csproj">

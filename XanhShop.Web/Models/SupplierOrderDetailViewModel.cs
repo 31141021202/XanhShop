@@ -18,5 +18,9 @@ namespace XanhShop.Web.Models
         public virtual SupplierOrderViewModel SupplierOrder { get; set; }
 
         public virtual ProductViewModel Product { get; set; }
+
+        public int StatusCode { get; set; }
+
+        public StatusCodeMapViewModel StatusCodeMap { get; set; }
     }
 }

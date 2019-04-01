@@ -18,5 +18,19 @@ namespace XanhShop.Common
             Cancel,
             Broken
         }
+
+        public enum ProductCategoryCode
+        {
+            DiverseVegs = 3,
+            Meat = 2
+        }
+
+        public enum SupplyingCategoryCode
+        {
+            Garden = 1,
+            Meat,
+            Fish,
+            Eggs
+        }
     }
 }

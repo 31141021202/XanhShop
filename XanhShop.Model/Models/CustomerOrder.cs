@@ -37,5 +37,7 @@ namespace XanhShop.Model.Models
         public virtual Customer Customer { get; set; }
 
         public virtual IEnumerable<CustomerOrderDetail> CustomerOrderDetails { get; set; }
-    }
+
+        public bool? IsModifiedByAdmin { get; set; } = false;
+    } 
 }

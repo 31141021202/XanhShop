@@ -114,8 +114,8 @@ namespace XanhShop.Data.Infrastructure
                     query = query.Include(include);
                 return query.Where<T>(predicate).AsQueryable<T>();
             }
-
-            return dataContext.Set<T>().Where<T>(predicate).AsQueryable<T>();
+            
+            return dataContext.Set<T>().Where<T>(predicate);
         }
 
         public virtual IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0, int size = 20, string[] includes = null)

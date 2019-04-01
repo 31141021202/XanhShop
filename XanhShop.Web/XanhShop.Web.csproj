@@ -204,9 +204,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomerOrderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\SupplierOrderController.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,11 +216,16 @@
     </Compile>
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CustomerOrderDetailViewModel.cs" />
+    <Compile Include="Models\CustomerOrderViewModel.cs" />
+    <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProductCategoryViewModel.cs" />
     <Compile Include="Models\ProductSupplierViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\ShipperViewModel.cs" />
+    <Compile Include="Models\StatusCodeMapViewModel.cs" />
     <Compile Include="Models\SupplierOrderDetailViewModel.cs" />
     <Compile Include="Models\SupplierOrderViewModel.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
@@ -420,6 +427,8 @@
     <Content Include="Views\SupplierOrder\Index.cshtml" />
     <Content Include="Views\SupplierOrder\GetGeneratedSupplierOrders.cshtml" />
     <Content Include="Views\SupplierOrder\Create.cshtml" />
+    <Content Include="Views\CustomerOrder\GetRelatedCustomerOrderDetailByProduct.cshtml" />
+    <Content Include="Views\Supplier\GetSuppliersByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
