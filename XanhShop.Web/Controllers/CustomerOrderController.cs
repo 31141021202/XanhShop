@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,14 @@ namespace XanhShop.Web.Controllers
         // GET: CustomerOrder
         public ActionResult Index()
         {
-            return View();
+            var customerOrder = _customerOrderService.GetProcessingCustomerOrder();
+            List<CustomerOrderViewModel> listCustomerModelVm = new List<CustomerOrderViewModel>();
+            foreach (var order in customerOrder)
+            {
+                CustomerOrderViewModel customerOrderVm = Mapper.Map<CustomerOrderViewModel>(order);
+                listCustomerModelVm.Add(customerOrderVm);
+            }
+            return View(listCustomerModelVm);
         }
 
         public ActionResult GetRelatedCustomerOrderDetailByProduct(int id)

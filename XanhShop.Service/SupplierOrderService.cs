@@ -42,7 +42,7 @@ namespace XanhShop.Service
         public IEnumerable<SupplierOrder> GenerateSupplierOrders()
         {
             List<SupplierOrder> listOrder = new List<SupplierOrder>();
-            var productQuantityList = _customerOrderDetailRepository.GenerateListProcessingOrderDetailGroupedByProduct();
+            var productQuantityList = GenerateListProcessingOrderDetailGroupedByProduct();
 
             foreach (var productQuantity in productQuantityList)
             {
@@ -86,6 +86,24 @@ namespace XanhShop.Service
         public void Save()
         {
             _unitOfWork.Commit();
+        }
+
+        private List<CustomerOrderDetail> GenerateListProcessingOrderDetailGroupedByProduct()
+        {
+            var listGroupedCustomerOrderDetails = _customerOrderDetailRepository.GetMulti(x => x.CustomerOrder.DateOrdered.Value.Day == DateTime.Today.Day
+               && x.CustomerOrder.DateOrdered.Value.Month == DateTime.Today.Month
+               && x.CustomerOrder.DateOrdered.Value.Year == DateTime.Today.Year
+               && x.CustomerOrder.StatusCode == (int)OptionSets.OrderStatusCode.Processing
+               && x.Product.ProductCategoryID != (int)OptionSets.ProductCategoryCode.DiverseVegs,
+               new string[] { "CustomerOrder", "Product" })
+               .GroupBy(x => x.ProductID)
+               .Select(x => new CustomerOrderDetail()
+               {
+                   ProductID = x.Key,
+                   Quantity = x.Sum(y => y.Quantity),
+               })
+               .ToList();
+            return listGroupedCustomerOrderDetails;
         }
     }
 }

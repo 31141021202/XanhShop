@@ -17,6 +17,7 @@ namespace XanhShop.Service
         CustomerOrder Delete(int id);
         void Update(CustomerOrder customerOrder);
         IEnumerable<CustomerOrder> GetMany(Expression<Func<CustomerOrder, bool>> where, string[] includes);
+        IEnumerable<CustomerOrder> GetProcessingCustomerOrder();
         CustomerOrder GetSingleById(int id);
         void Save();
     }
@@ -45,6 +46,11 @@ namespace XanhShop.Service
         public IEnumerable<CustomerOrder> GetMany(Expression<Func<CustomerOrder, bool>> where, string[] includes)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<CustomerOrder> GetProcessingCustomerOrder()
+        {
+            return _customerOrderRepository.GetMulti(x => x.StatusCode == (int)OptionSets.OrderStatusCode.Processing);
         }
 
         public CustomerOrder GetSingleById(int id)

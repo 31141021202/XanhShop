@@ -13,34 +13,38 @@
 </div>
 <hr />
 <div>
-    <div>
+    <div id="actionBar">
         <button class="btn btn-success" onclick="order()">Tạo tất cả đặt hàng</button>
+        <button class="btn btn-default" onclick="reset()">Reset</button>
     </div>
 
     <table id="supplierOrdersData" class="table"></table>
     <div id="orderDetails">
         <div class="form-horizontal">
             <div class="form-group">
-                <p id="supplierName" class="control-label col-md-4"></p>
+                <p class="col-md-2">Tên</p>
+                <p id="supplierName" class="col-md-6"></p>
             </div>
             <div class="form-group">
-                <p id="supplierPhoneNumber" class="control-label col-md-4"></p>
+                <p class="col-md-2">Số điện thoại</p>
+                <p id="supplierPhoneNumber" class="col-md-6"></p>
             </div>
             <div class="form-group">
-                <p id="supplierEmail" class="control-label col-md-4"></p>
+                <p class="col-md-2">Địa chỉ</p>
+                <p id="supplierEmail" class="col-md-6"></p>
             </div>
 
             <table id="productOrderDetails" class="table"></table>
 
             <div class="form-group">
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <button id="" class="btn btn-default" onclick="edit()">Sửa</button>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <button class="btn btn-default btn-save" onclick="save(this.value)">Lưu</button>
                 </div>
-                <div class="col-md-2">
-                    <button class="btn btn-success" onclick="orderSingle()">Tạo đặt hàng</button>
+                <div class="col-md-1">
+                    <button class="btn btn-success btn-order-single" onclick="orderSingle()">Tạo đặt hàng</button>
                 </div>
             </div>
         </div>
@@ -52,15 +56,16 @@
     <script>
         var SUPPLYING_CATEGORY_DIVERSE = 3;
         window.onload = function () {
-            //var data = window.localStorage.getItem("ordersResult");
-            //if (data != null) {
-            //    data = JSON.parse(data);
-            //    initOrder(data);
-            //    initOrderDetails(data[0]);
-            //    $('.btn-save').first().attr('value', 0);
-            //    lockEditQuantity();
-            //}
-            //else {
+            var data = window.localStorage.getItem("ordersResult");
+            if (data != null) {
+                data = JSON.parse(data);
+                initOrder(data);
+                initOrderDetails(data[0]);
+                $('.btn-save').first().attr('value', 0);
+                $('.btn-order-single').first().attr('value', 0);
+                lockEditQuantity();
+            }
+            else {
                 $.ajax({
                     method: "GET",
                     url: "/SupplierOrder/GenerateSupplierOrders/",
@@ -71,11 +76,12 @@
                     initOrder(result.data);
                     initOrderDetails(result.data[0]);
                     $('.btn-save').first().attr('value', 0);
+                    $('.btn-order-single').first().attr('value', 0);
                     lockEditQuantity();
                 }).fail(function () {
                     alert("Lỗi đã xảy ra");
                 });
-            //}
+            }
             $.ajax({
                 method: "GET",
                 url: "/CustomerOrder/SummarizeBagsOfVeg/",
@@ -94,7 +100,7 @@
             var htmlListSupplierOrder = "";
             for (var i = 0; i < data.length; i++) {
                 htmlListSupplierOrder += '<tr>';
-                htmlListSupplierOrder += '<td id="' + i + '"class="order" onclick="getOrderDetails(' + i + ')">' + data[i].Supplier.Name + '</td>';
+                htmlListSupplierOrder += '<td id="' + i + '"class="order" onclick="getOrderDetails(' + i + ')"><div class="td-order">' + data[i].Supplier.Name + '</div></td>';
                 htmlListSupplierOrder += '</tr>';
             }
             $('#supplierOrdersData').html(htmlListSupplierOrder);
@@ -131,6 +137,7 @@
         function getOrderDetails(index) {
             var result = JSON.parse(window.localStorage.getItem('ordersResult'));
             $('.btn-save').first().attr('value', index);
+            $('.btn-order-single').first().attr('value', index);
             initOrderDetails(result[index]);
         }
 
@@ -178,6 +185,14 @@
                     });
                 }     
             }      
+        }
+
+        function reset() {
+            var r = confirm("Tải lại tất cả đặt hàng?");
+            if (r == true) {
+                window.localStorage.removeItem("ordersResult");
+                location.reload();
+            }
         }
     </script> 
 }

@@ -429,6 +429,7 @@
     <Content Include="Views\SupplierOrder\Create.cshtml" />
     <Content Include="Views\CustomerOrder\GetRelatedCustomerOrderDetailByProduct.cshtml" />
     <Content Include="Views\Supplier\GetSuppliersByCategory.cshtml" />
+    <Content Include="Views\CustomerOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

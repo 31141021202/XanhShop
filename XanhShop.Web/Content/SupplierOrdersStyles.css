@@ -6,7 +6,36 @@
 }
 
 #orderDetails {
+    padding: 30px;
     width: 800px;
     display: inline-block;
+    background-color: bisque;
+}
+
+#actionBar {
+    padding: 20px 0px;
+}
+
+#supplierName {
+    font-weight: bold
+}
+
+#supplierPhoneNumber {
+    font-weight: bold
+}
+
+#supplierEmail {
+    font-weight: bold
+}
+
+.order:hover {
+    cursor: pointer
+}
+
+.td-order {
+    padding: 10px 12px;
+}
+
+.td-order:hover {
     background-color: bisque;
 }
