@@ -52,9 +52,7 @@ namespace XanhShop.Service
                 {
                     SupplierOrder supplierOrder = new SupplierOrder();
                     supplierOrder.SupplierID = productSupplier.SupplierID;
-                    supplierOrder.Supplier = productSupplier.Supplier;
-                    supplierOrder.StatusCode = (int)OptionSets.OrderStatusCode.Processing;
-                    supplierOrder.StatusCodeMap = _statusCodeMapRepository.GetStatusLabel((int)OptionSets.OrderStatusCode.Processing);
+                    supplierOrder.Supplier = productSupplier.Supplier;;
                     supplierOrder.SupplierOrderDetails = new List<SupplierOrderDetail>()
                         {
                             new SupplierOrderDetail()
@@ -62,7 +60,9 @@ namespace XanhShop.Service
                                 ProductID = productQuantity.ProductID,
                                 Product = productSupplier.Product,
                                 Quantity = productQuantity.Quantity / productSuppliers.Count(),
-                                BuyPricePerUnit = productSupplier.BuyPricePerUnit
+                                BuyPricePerUnit = productSupplier.BuyPricePerUnit,
+                                StatusCode = (int)OptionSets.OrderStatusCode.Processing,
+                                StatusCodeMap = _statusCodeMapRepository.GetStatusLabel((int)OptionSets.OrderStatusCode.Processing)
                             }
                         };
                     listOrder.Add(supplierOrder);
@@ -73,6 +73,8 @@ namespace XanhShop.Service
                 SupplierID = x.Key,
                 SupplierOrderDetails = x.Select(y => y.SupplierOrderDetails).Aggregate((a,b) => a.Concat(b)),
                 Supplier = x.Select(y => y.Supplier).FirstOrDefault(),
+                StatusCode = (int)OptionSets.OrderStatusCode.Processing,
+                StatusCodeMap = _statusCodeMapRepository.GetStatusLabel((int)OptionSets.OrderStatusCode.Processing)
             }).ToList();
 
             return listOrder;

@@ -18,6 +18,7 @@ namespace XanhShop.Service
         void Update(CustomerOrder customerOrder);
         IEnumerable<CustomerOrder> GetMany(Expression<Func<CustomerOrder, bool>> where, string[] includes);
         IEnumerable<CustomerOrder> GetProcessingCustomerOrder();
+        IEnumerable<CustomerOrder> GetCurrentProcessingCustomerOrder();
         CustomerOrder GetSingleById(int id);
         void Save();
     }
@@ -68,6 +69,12 @@ namespace XanhShop.Service
             _customerOrderRepository.Update(customerOrder);
         }
 
-        
+        public IEnumerable<CustomerOrder> GetCurrentProcessingCustomerOrder()
+        {
+            return _customerOrderRepository.GetMulti(x => x.DateOrdered.Value.Day == DateTime.Today.Day
+               && x.DateOrdered.Value.Month == DateTime.Today.Month
+               && x.DateOrdered.Value.Year == DateTime.Today.Year
+               && x.StatusCode == (int)OptionSets.OrderStatusCode.Processing);
+        }
     }
 }

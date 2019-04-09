@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<XanhShop.Web.Models.SupplierOrderViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Đặt hàng nhà cung ứng";
 }
 
-<h2>Index</h2>
-
+<h2 style="margin: 40px 0px">Các đặt hàng nhà cung ứng</h2>
 <p>
     @Html.ActionLink("Tổng hợp", "GetGeneratedSupplierOrders", "SupplierOrder", null, new { @class = "btn btn-success"} )
 </p>
@@ -15,10 +14,13 @@
             @Html.DisplayNameFor(model => model.SupplierID)
         </th>
         <th>
+            Tên nhà cung ứng
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.StatusCode)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AdditionalNote)
@@ -32,18 +34,21 @@
             @Html.DisplayFor(modelItem => item.SupplierID)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Supplier.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.DateCreated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
+            @Html.DisplayFor(modelItem => item.StatusCodeMap.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AdditionalNote)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>
     </tr>
 }

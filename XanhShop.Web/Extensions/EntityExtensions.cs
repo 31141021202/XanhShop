@@ -32,7 +32,7 @@ namespace XanhShop.Web.Extensions
             supplierOrder.DateCreated = supplierOrderVm.DateCreated;
             supplierOrder.Status = supplierOrderVm.Status;
             supplierOrder.AdditionalNote = supplierOrderVm.AdditionalNote;
-            supplierOrder.StatusCode = supplierOrder.StatusCode;
+            supplierOrder.StatusCode = supplierOrderVm.StatusCode;
         }
 
         public static void UpdateSupplierOrderDetail(this SupplierOrderDetail supplierOrderDetail, SupplierOrderDetailViewModel supplierOrderDetailVm)

@@ -55,7 +55,14 @@ namespace XanhShop.Web.Controllers
         [HttpGet]
         public ActionResult GenerateSupplierOrders()
         {
-            return Json(new { data = _supplierOrderService.GenerateSupplierOrders() }, JsonRequestBehavior.AllowGet);
+            var generatedSupplierOrders = _supplierOrderService.GenerateSupplierOrders();
+            var relatedCustomerOrder = _customerOrderService.GetCurrentProcessingCustomerOrder();
+            List<int> relatedCustomerOrderIds = new List<int>();
+            foreach (var order in relatedCustomerOrder)
+            {
+                relatedCustomerOrderIds.Add(order.ID);
+            }
+            return Json(new { data = generatedSupplierOrders, customerOrderIds = relatedCustomerOrderIds }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetGeneratedSupplierOrders()

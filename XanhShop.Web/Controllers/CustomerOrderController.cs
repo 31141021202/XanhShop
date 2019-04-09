@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using XanhShop.Common;
 using XanhShop.Model.Models;
 using XanhShop.Service;
 using XanhShop.Web.Extensions;
@@ -59,6 +60,22 @@ namespace XanhShop.Web.Controllers
             dbOrder.IsModifiedByAdmin = true;
             _customerOrderService.Update(dbOrder);
             _customerOrderService.Save();
+
+            return Json(new { result = "success" });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateGeneratedOrderStatus(string data)
+        {
+            var target = JsonConvert.DeserializeObject<List<int>>(data);
+
+            foreach (int id in target)
+            {
+                var dbOrder = _customerOrderService.GetSingleById(id);
+                dbOrder.StatusCode = (int)OptionSets.OrderStatusCode.Validating;
+                _customerOrderService.Update(dbOrder);
+                _customerOrderService.Save();
+            }
 
             return Json(new { result = "success" });
         }

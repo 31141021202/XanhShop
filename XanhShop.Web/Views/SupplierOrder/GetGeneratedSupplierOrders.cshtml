@@ -43,9 +43,6 @@
                 <div class="col-md-1">
                     <button class="btn btn-default btn-save" onclick="save(this.value)">Lưu</button>
                 </div>
-                <div class="col-md-1">
-                    <button class="btn btn-success btn-order-single" onclick="orderSingle()">Tạo đặt hàng</button>
-                </div>
             </div>
         </div>
     </div>
@@ -62,7 +59,6 @@
                 initOrder(data);
                 initOrderDetails(data[0]);
                 $('.btn-save').first().attr('value', 0);
-                $('.btn-order-single').first().attr('value', 0);
                 lockEditQuantity();
             }
             else {
@@ -72,12 +68,14 @@
                     dataType: "json",
                     async: false,
                 }).done(function (result) {
-                    window.localStorage.setItem('ordersResult', JSON.stringify(result.data));
-                    initOrder(result.data);
-                    initOrderDetails(result.data[0]);
-                    $('.btn-save').first().attr('value', 0);
-                    $('.btn-order-single').first().attr('value', 0);
-                    lockEditQuantity();
+                    if (result.data.length > 0) {
+                        window.localStorage.setItem('ordersResult', JSON.stringify(result.data));
+                        window.localStorage.setItem('relatedCustomerOrderIds', JSON.stringify(result.customerOrderIds));
+                        initOrder(result.data);
+                        initOrderDetails(result.data[0]);
+                        $('.btn-save').first().attr('value', 0);
+                        lockEditQuantity();
+                    }
                 }).fail(function () {
                     alert("Lỗi đã xảy ra");
                 });
@@ -137,7 +135,6 @@
         function getOrderDetails(index) {
             var result = JSON.parse(window.localStorage.getItem('ordersResult'));
             $('.btn-save').first().attr('value', index);
-            $('.btn-order-single').first().attr('value', index);
             initOrderDetails(result[index]);
         }
 
@@ -166,7 +163,7 @@
         }
 
         function order() {
-            var r = confirm("Đặt tất cả các đơn hàng?");
+            var r = confirm("Tạo tất cả các đơn hàng?");
             if (r == true) {
                 var data = window.localStorage.getItem("ordersResult");
                 if (data != null) {
@@ -178,8 +175,9 @@
                         },
                         async: false
                     }).done(function () {
-                        alert("Dat thanh cong");
+                        alert("Đặt thàng công");
                         window.localStorage.removeItem("ordersResult");
+                        updateCustomerOrders();
                     }).fail(function () {
                         alert("Đã có lỗi xảy ra");
                     });
@@ -187,10 +185,30 @@
             }      
         }
 
+        function updateCustomerOrders() {
+            var ids = window.localStorage.getItem("relatedCustomerOrderIds");
+            if (ids != null) {
+                $.ajax({
+                    method: "POST",
+                    url: "/CustomerOrder/UpdateGeneratedOrderStatus/",
+                    data: {
+                        data: ids
+                    },
+                    async: false
+                }).done(function () {
+                    alert("Cập nhật đặt hàng khách hàng thành công");
+                    window.localStorage.removeItem("relatedCustomerOrderIds");
+                }).fail(function () {
+                    alert("Đã có lỗi khi cập nhật đặt hàng của khách hàng");
+                });
+            }
+        }
+
         function reset() {
             var r = confirm("Tải lại tất cả đặt hàng?");
             if (r == true) {
                 window.localStorage.removeItem("ordersResult");
+                window.localStorage.removeItem("relatedCustomerOrderIds");
                 location.reload();
             }
         }
