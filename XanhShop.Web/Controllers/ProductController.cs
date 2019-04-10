@@ -1,9 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using XanhShop.Service;
+using XanhShop.Web.Extensions;
+using XanhShop.Web.Models;
 
 namespace XanhShop.Web.Controllers
 {
@@ -15,9 +18,17 @@ namespace XanhShop.Web.Controllers
             _productService = productService;
         }
         
-        public ActionResult Index()
+        public ActionResult ProductListAsCart()
         {
-            return View();
+            var listProduct = _productService.GetAll();
+            List<CartDetailViewModel> listProductCartDetailVm = new List<CartDetailViewModel>();
+            foreach (var product in listProduct)
+            {
+                CartDetailViewModel cartDetailVm = new CartDetailViewModel();
+                cartDetailVm.UpdateCartDetail(product);
+                listProductCartDetailVm.Add(cartDetailVm);
+            }
+            return View(listProductCartDetailVm);
         }
     }
 }

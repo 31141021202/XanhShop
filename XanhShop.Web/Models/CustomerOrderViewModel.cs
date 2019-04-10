@@ -20,14 +20,18 @@ namespace XanhShop.Web.Models
         [Display(Name = "Ngày đặt")]
         public DateTime? DateOrdered { get; set; }
 
+        [Display(Name = "Phương thức nhận")]
         public string ReceiveMethod { get; set; }
 
+        [Display(Name = "Phương thức thanh toán")]
         public string PaymentMethod { get; set; }
 
+        [Display(Name = "Người giao hàng")]
         public int? ShipperID { get; set; }
 
         public virtual ShipperViewModel Shipper { get; set; }
 
+        [Display(Name = "Khách hàng")]
         public int? CustomerID { get; set; }
 
         public virtual CustomerViewModel Customer { get; set; }

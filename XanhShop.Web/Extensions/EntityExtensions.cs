@@ -115,5 +115,13 @@ namespace XanhShop.Web.Extensions
             shipper.Name = shipperVm.Name;
             shipper.StatusCode = shipperVm.StatusCode;
         }
+
+        public static void UpdateCartDetail(this CartDetailViewModel cartDetailVm, Product product)
+        {
+            cartDetailVm.ProductID = product.ID;
+            cartDetailVm.ProductName = product.Name;
+            cartDetailVm.SellUnit = product.SellUnit;
+            cartDetailVm.SellPricePerUnit = product.SellPricePerUnit;
+        }
     }
 }

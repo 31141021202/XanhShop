@@ -86,5 +86,47 @@ namespace XanhShop.Web.Controllers
             var sumQuantity = _customerOrderDetailService.GetTotalBagOfVegQuantity();
             return Json(new { total = sumQuantity }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(CustomerOrderViewModel customerOrderVm)
+        {
+            CustomerOrder customerOrder = new CustomerOrder();
+            customerOrder.UpdateCustomerOrder(customerOrderVm);
+            customerOrder.CustomerID = 11; // Sample customer
+            customerOrder.StatusCode = 1;
+            customerOrder.DateOrdered = DateTime.Now;
+            _customerOrderService.Add(customerOrder);
+            _customerOrderService.Save();
+            var cart = GetCartFromSession();
+            foreach (var cartDetail in cart)
+            {
+                CustomerOrderDetail orderDetail = new CustomerOrderDetail();
+                orderDetail.ProductID = cartDetail.ProductID;
+                orderDetail.CustomerOrderID = customerOrder.ID;
+                orderDetail.StatusCode = 1;
+                orderDetail.Quantity = cartDetail.Quantity;
+                orderDetail.SellPricePerUnit = cartDetail.SellPricePerUnit;
+                _customerOrderDetailService.Add(orderDetail);
+                _customerOrderDetailService.Save();
+            }
+            Session["Cart"] = null;
+            return RedirectToAction("Index");
+        }
+
+        public List<CartDetailViewModel> GetCartFromSession()
+        {
+            List<CartDetailViewModel> cart = Session["Cart"] as List<CartDetailViewModel>;
+            if (Session["Cart"] == null)
+            {
+                cart = new List<CartDetailViewModel>();
+                Session["Cart"] = cart;
+            }
+            return cart;
+        }
     }
 }

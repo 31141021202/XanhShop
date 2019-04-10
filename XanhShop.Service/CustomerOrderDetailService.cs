@@ -15,6 +15,7 @@ namespace XanhShop.Service
         IEnumerable<CustomerOrderDetail> GetCustomerOrderDetailByProduct(int productId);
         void Update(CustomerOrderDetail customerOrderDetail);
         CustomerOrderDetail GetSingleOrderDetail(int productID, int customerID);
+        CustomerOrderDetail Add(CustomerOrderDetail entity);
         double GetTotalBagOfVegQuantity();
         void Save();
     }
@@ -57,6 +58,11 @@ namespace XanhShop.Service
                 && x.CustomerOrder.StatusCode == (int)OptionSets.OrderStatusCode.Processing
                 && x.Product.ProductCategoryID == (int)OptionSets.ProductCategoryCode.DiverseVegs);
             return listCustomerOrderDetailBagOfVegs.Sum(x => x.Quantity);
+        }
+
+        public CustomerOrderDetail Add(CustomerOrderDetail entity)
+        {
+            return _customerOrderDetailRepository.Add(entity);
         }
     }
 }

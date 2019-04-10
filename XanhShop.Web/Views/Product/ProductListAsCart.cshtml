@@ -1,0 +1,70 @@
+﻿@model IEnumerable<XanhShop.Web.Models.CartDetailViewModel>
+
+@{
+    ViewBag.Title = "Sản phẩm";
+}
+
+<h2>Sản phẩm</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SellUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SellPricePerUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellUnit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellPricePerUnit)
+        </td>
+        <td>
+            <input type="number" id="@item.ProductID" value="@item.Quantity" />
+        </td>
+        <td>
+            <button class="btn btn-default" onclick="addToCart(@item.ProductID)">Thêm vào giỏ hàng</button>
+        </td>
+    </tr>
+}
+
+</table>
+
+@Html.ActionLink("Tiến hành đặt hàng", "Create", "CustomerOrder", null, new { @class = "btn btn-success" })
+
+@section Scripts {
+    <script>
+        function addToCart(id) {
+            var quantity = $('#' + id).val();
+            $.ajax({
+                method: "POST",
+                url: "/Cart/AddToCart/",
+                data: {
+                    data: id + " " + quantity
+                },
+                async: false
+            }).done(function (data) {
+                if (data.result = "success") {
+                    alert("Đã thêm vào giỏ hàng");
+                }
+            }).fail(function () {
+                alert("Đã có lỗi xảy ra");
+            });
+        }
+    </script>    
+}

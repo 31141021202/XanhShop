@@ -204,6 +204,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomerOrderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -216,6 +217,7 @@
     </Compile>
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CartDetailViewModel.cs" />
     <Compile Include="Models\CustomerOrderDetailViewModel.cs" />
     <Compile Include="Models\CustomerOrderViewModel.cs" />
     <Compile Include="Models\CustomerViewModel.cs" />
@@ -430,10 +432,13 @@
     <Content Include="Views\CustomerOrder\GetRelatedCustomerOrderDetailByProduct.cshtml" />
     <Content Include="Views\Supplier\GetSuppliersByCategory.cshtml" />
     <Content Include="Views\CustomerOrder\Index.cshtml" />
+    <Content Include="Views\CustomerOrder\Create.cshtml" />
+    <Content Include="Views\Product\ProductList.cshtml" />
+    <Content Include="Views\Product\ProductListAsCart.cshtml" />
+    <Content Include="Views\Cart\CartDetailFromSession.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -36,7 +36,7 @@ namespace XanhShop.Service
 
         public CustomerOrder Add(CustomerOrder customerOrder)
         {
-            throw new NotImplementedException();
+            return _customerOrderRepository.Add(customerOrder);
         }
 
         public CustomerOrder Delete(int id)

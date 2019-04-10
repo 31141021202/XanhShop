@@ -24,9 +24,6 @@
             @Html.DisplayNameFor(model => model.PaymentMethod)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ShipperID)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.CustomerID)
         </th>
         <th>
@@ -35,7 +32,6 @@
         <th>
             @Html.DisplayNameFor(model => model.IsModifiedByAdmin)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -56,21 +52,13 @@
             @Html.DisplayFor(modelItem => item.PaymentMethod)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ShipperID)
+            @Html.DisplayFor(modelItem => item.Customer.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CustomerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StatusCode)
+            @Html.DisplayFor(modelItem => item.StatusCodeMap.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsModifiedByAdmin)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
 }
